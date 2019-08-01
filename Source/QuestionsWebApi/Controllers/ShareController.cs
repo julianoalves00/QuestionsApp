@@ -12,6 +12,9 @@ namespace QuestionsWebApi.Controllers
     public class ShareController : ApiController
     {
         // POST api/share?destination_email={destination_email}&content_url={content_url}
+        /// <summary>
+        /// Share the content of a URL in email
+        /// </summary>
         public void Post([FromBody]string destination_email, [FromBody]string content_url)
         {
             try

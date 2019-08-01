@@ -12,6 +12,9 @@ namespace QuestionsWebApi.Controllers
     public class HealthController : ApiController
     {
         // GET api/health
+        /// <summary>
+        /// Check the server health, testing if it is possible to query an item in the database
+        /// </summary>
         public bool Get()
         {
             bool returnValue = false;

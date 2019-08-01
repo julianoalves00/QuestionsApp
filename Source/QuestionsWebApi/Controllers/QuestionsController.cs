@@ -13,6 +13,9 @@ namespace QuestionsWebApi.Controllers
     public class QuestionsController : ApiController
     {
         // GET api/questions/5
+        /// <summary>
+        /// Get the question by ID
+        /// </summary>
         [HttpGet]
         public Question Get(long id)
         {
@@ -29,7 +32,10 @@ namespace QuestionsWebApi.Controllers
             }
             return question;
         }
-        //GET api/questions?limit={limit}&offset={offset}&filter={filter}
+        // GET api/questions?limit={limit}&offset={offset}&filter={filter}
+        /// <summary>
+        /// Get a list of questions allowing filter by description, limit of itens an offset
+        /// </summary>
         [HttpGet]
         public IList<Question> Get(int limit, int offset, string filter)
         {
@@ -48,6 +54,9 @@ namespace QuestionsWebApi.Controllers
         }
 
         // POST api/questions
+        /// <summary>
+        /// Save / Create a nem question using a post method
+        /// </summary>
         [HttpPost]
         public Question Post(Question question)
         {

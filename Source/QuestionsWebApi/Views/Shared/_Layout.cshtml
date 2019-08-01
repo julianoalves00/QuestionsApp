@@ -16,11 +16,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Questions App", "Index", "Home", null, new { @class = "navbar-brand" })
+               
+                <ul class="nav navbar-nav">
+                    <li>
+                        @*@Html.ActionLink("Questions App", "Index", "Home", null, new { @class = "navbar-brand" })*@
+                        <a href="javascript:document.location.href='/';">Questions App</a>
+                    </li>
+                </ul>
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>
+                        @*@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)*@
+                        <a href="javascript:document.location.href='/Help/Help';">API</a>
+                    </li>
                 </ul>
             </div>
         </div>

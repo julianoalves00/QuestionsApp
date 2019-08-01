@@ -18,9 +18,9 @@ namespace QuestionsLibrary
                 return new QuestionsControl();
             }
         }
-        public void Save(Question entity)
+        public Question Save(Question entity)
         {
-            QControl.Save(entity);
+            return QControl.Save(entity);
         }
         public void Update(Question entity)
         {

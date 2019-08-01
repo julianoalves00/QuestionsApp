@@ -1,4 +1,5 @@
 ﻿using QuestionsLibrary;
+using QuestionsLibrary.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,18 @@ namespace QuestionsWebApi.Controllers
         // GET api/health
         public bool Get()
         {
-            QuestionsFacade facade = new QuestionsFacade();
+            bool returnValue = false;
+            try
+            {
+                QuestionsFacade facade = new QuestionsFacade();
 
-            return facade.Health();
+                returnValue = facade.Health();
+            }
+            catch (Exception ex)
+            {
+                WriteLog.AddEventLogEntry(ex);
+            }
+            return returnValue;
         }
     }
 }

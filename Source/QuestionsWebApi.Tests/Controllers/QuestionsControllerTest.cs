@@ -51,5 +51,25 @@ namespace QuestionsWebApi.Tests.Controllers
                 Assert.AreEqual(true, false, ex.Message);
             }
         }
+
+        [TestMethod]
+        public void Post()
+        {
+            try
+            {
+                // Arrange
+                QuestionsController controller = new QuestionsController();
+
+                // Act
+                Question retValue = controller.Post(new Question { Description = "Why and How?", Number = 199 });
+
+                // Assert
+                Assert.AreEqual(true, retValue.ID > 0);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(true, false, ex.Message);
+            }
+        }
     }
 }

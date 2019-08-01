@@ -9,7 +9,7 @@ namespace QuestionsLibrary
 {
     internal interface IQuestionsControl
     {
-        void Save(Question entity);
+        Question Save(Question entity);
         void Update(Question entity);
         void Delete(Question entity);
         void Delete(long idQuestion);

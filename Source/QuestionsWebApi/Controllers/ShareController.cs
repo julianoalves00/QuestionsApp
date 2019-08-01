@@ -1,4 +1,5 @@
 ﻿using QuestionsLibrary;
+using QuestionsLibrary.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,16 @@ namespace QuestionsWebApi.Controllers
         // POST api/share?destination_email={destination_email}&content_url={content_url}
         public void Post([FromBody]string destination_email, [FromBody]string content_url)
         {
-            QuestionsFacade facade = new QuestionsFacade();
+            try
+            {
+                QuestionsFacade facade = new QuestionsFacade();
 
-            facade.ShareByEmail(destination_email, content_url);
+                facade.ShareByEmail(destination_email, content_url);
+            }
+            catch (Exception ex)
+            {
+                WriteLog.AddEventLogEntry(ex);
+            }
         }
     }
 }

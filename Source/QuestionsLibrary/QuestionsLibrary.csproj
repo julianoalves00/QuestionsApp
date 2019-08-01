@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="General\EmailTools.cs" />
     <Compile Include="Entities\Question.cs" />
+    <Compile Include="General\WriteLog.cs" />
     <Compile Include="IQuestionsControl.cs" />
     <Compile Include="QuestionsFacade.cs" />
     <Compile Include="Entities\QuestionsContext.cs" />

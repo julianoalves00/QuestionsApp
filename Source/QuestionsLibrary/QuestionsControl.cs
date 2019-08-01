@@ -15,13 +15,15 @@ namespace QuestionsLibrary
 {
     internal class QuestionsControl : IQuestionsControl
     {
-        public void Save(Question entity)
+        public Question Save(Question entity)
         {
             using (var ctx = new QuestionsContext())
             {
                 ctx.Questions.Add(entity);
                 ctx.SaveChanges();
             }
+
+            return entity;
         }
         public void Update(Question entity)
         {

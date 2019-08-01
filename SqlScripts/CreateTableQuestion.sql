@@ -52,5 +52,3 @@ insert Question values('What’s On Your Bucket List?', 27)
 insert Question values('Do You Have Any Trips Coming Up?', 28)
 insert Question values('What’s Something You Could Teach Me About?', 29)
 insert Question values('What Is Your Favorite Hobby?', 30)
-
--- select * from Question

@@ -20,16 +20,11 @@ namespace QuestionsWebApi.Controllers
         public Question Get(long id)
         {
             Question question = null;
-            try
-            {
-                QuestionsFacade facade = new QuestionsFacade();
 
-                question = facade.GetQuestion(id);
-            }
-            catch (Exception ex)
-            {
-                WriteLog.AddEventLogEntry(ex);
-            }
+            QuestionsFacade facade = new QuestionsFacade();
+
+            question = facade.GetQuestion(id);
+
             return question;
         }
         // GET api/questions?limit={limit}&offset={offset}&filter={filter}
@@ -40,16 +35,11 @@ namespace QuestionsWebApi.Controllers
         public IList<Question> Get(int limit, int offset, string filter)
         {
             IList<Question> questions = null;
-            try
-            {
-                QuestionsFacade facade = new QuestionsFacade();
 
-                questions = facade.GetQuestion(filter, limit, offset);
-            }
-            catch (Exception ex)
-            {
-                WriteLog.AddEventLogEntry(ex);
-            }
+            QuestionsFacade facade = new QuestionsFacade();
+
+            questions = facade.GetQuestion(filter, limit, offset);
+
             return questions;
         }
 
@@ -61,15 +51,21 @@ namespace QuestionsWebApi.Controllers
         public Question Post(Question question)
         {
             Question returnValue = null;
-            try
-            {
-                QuestionsFacade facade = new QuestionsFacade();
-                returnValue = facade.Save(question);
-            }
-            catch (Exception ex)
-            {
-                WriteLog.AddEventLogEntry(ex);
-            }
+
+            QuestionsFacade facade = new QuestionsFacade();
+            returnValue = facade.SaveOrUpdate(question);
+
+            return returnValue;
+        }
+
+        [HttpDelete]
+        public bool Delete(long id)
+        {
+            bool returnValue = false;
+
+            QuestionsFacade facade = new QuestionsFacade();
+            returnValue = facade.Delete(id);
+
             return returnValue;
         }
     }

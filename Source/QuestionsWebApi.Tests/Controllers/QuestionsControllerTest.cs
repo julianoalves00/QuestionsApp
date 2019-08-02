@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuestionsLibrary.Entities;
+using QuestionsLibrary.General;
 using QuestionsWebApi.Controllers;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,10 @@ namespace QuestionsWebApi.Tests.Controllers
         {
             try
             {
-                // Arrange
                 QuestionsController controller = new QuestionsController();
 
-                // Act
                 Question result = controller.Get(5);
 
-                // Assert
                 Assert.AreEqual(5, result.ID);
             }
             catch (Exception ex)
@@ -37,13 +35,10 @@ namespace QuestionsWebApi.Tests.Controllers
         {
             try
             {
-                // Arrange
                 QuestionsController controller = new QuestionsController();
 
-                // Act
                 IList<Question> result = controller.Get(10, 2, "Wh");
 
-                // Assert
                 Assert.AreEqual(10, result.Count);
             }
             catch (Exception ex)
@@ -55,16 +50,43 @@ namespace QuestionsWebApi.Tests.Controllers
         [TestMethod]
         public void Post()
         {
+            bool itemNotExists = false;
             try
             {
-                // Arrange
                 QuestionsController controller = new QuestionsController();
 
-                // Act
-                Question retValue = controller.Post(new Question { Description = "Why and How?", Number = 199 });
+                // test save
+                Question question = new Question { Description = "Why and How?", Number = 199 };
 
-                // Assert
+                Question retValue = controller.Post(question);
+
                 Assert.AreEqual(true, retValue.ID > 0);
+
+                // test update
+                question.Description = "What is your LAST name?";
+                question.Number = 200;
+
+                retValue = controller.Post(question);
+
+                Assert.AreEqual(true, retValue.Number == 200);
+
+                // test delete
+                bool returnDelete = controller.Delete(question.ID);
+
+                retValue = controller.Get(question.ID);
+
+                Assert.AreEqual(true, retValue == null);
+                Assert.AreEqual(true, returnDelete);
+
+                // test update item not exists, throw exception
+                itemNotExists = true;
+                question.ID = 1001;
+
+                retValue = controller.Post(question);
+            }
+            catch (QuestionLibaryException ex)
+            {
+                Assert.AreEqual(true, itemNotExists && ex.Message.Contains("does not exist"));
             }
             catch (Exception ex)
             {

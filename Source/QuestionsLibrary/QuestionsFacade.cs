@@ -1,4 +1,5 @@
-﻿using QuestionsLibrary.Entities;
+﻿using QuestionsLibrary.DynamicProxy;
+using QuestionsLibrary.Entities;
 using QuestionsLibrary.General;
 using System;
 using System.Collections.Generic;
@@ -11,46 +12,52 @@ namespace QuestionsLibrary
 {
     public class QuestionsFacade
     {
-        private IQuestionsControl QControl 
+        private IQuestionsControl QuestionControlInstance 
         {
             get
             {
-                return new QuestionsControl();
+                // Instance QuestionsControl using a proxy
+                IQuestionsControl qControl = (IQuestionsControl)ControlProxy.NewInstance(new QuestionsControl());
+                return qControl;
             }
         }
         public Question Save(Question entity)
         {
-            return QControl.Save(entity);
+            return QuestionControlInstance.Save(entity);
         }
         public void Update(Question entity)
         {
-            QControl.Update(entity);
+            QuestionControlInstance.Update(entity);
         }
-        public void Delete(Question entity)
+        public Question SaveOrUpdate(Question entity) 
         {
-            QControl.Delete(entity);
+            return QuestionControlInstance.SaveOrUpdate(entity);
         }
-        public void Delete(long idQuestion)
+        public bool Delete(Question entity)
         {
-            QControl.Delete(idQuestion);
+            return QuestionControlInstance.Delete(entity);
+        }
+        public bool Delete(long idQuestion)
+        {
+            return QuestionControlInstance.DeleteById(idQuestion);
         }
 
         public bool Health() 
         {
-            return QControl.Health();
+            return QuestionControlInstance.Health();
         }
         public IList<Question> GetQuestion(string filter = null, int limit = 0, int offset = 0) 
         {
-            return QControl.GetQuestion(filter, limit, offset);
+            return QuestionControlInstance.GetQuestion(filter, limit, offset);
         }
         public Question GetQuestion(long idQuestion)
         {
-            return QControl.GetQuestion(idQuestion);
+            return QuestionControlInstance.GetQuestion(idQuestion);
         }
 
-        public void ShareByEmail(string email, string urlContent)
+        public bool ShareByEmail(string email, string urlContent)
         {
-            QControl.ShareByEmail(email, urlContent);
+            return QuestionControlInstance.ShareByEmail(email, urlContent);
         }
     }
 }

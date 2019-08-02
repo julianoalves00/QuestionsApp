@@ -16,13 +16,10 @@ namespace QuestionsWebApi.Tests.Controllers
         {
             try
             {
-                // Arrange
                 HealthController controller = new HealthController();
 
-                // Act
                 bool result = controller.Get();
 
-                // Assert
                 Assert.IsNotNull(result);
                 Assert.AreEqual(true, result);
             }

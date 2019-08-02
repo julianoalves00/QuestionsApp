@@ -17,16 +17,9 @@ namespace QuestionsWebApi.Controllers
         /// </summary>
         public void Post([FromBody]string destination_email, [FromBody]string content_url)
         {
-            try
-            {
-                QuestionsFacade facade = new QuestionsFacade();
+            QuestionsFacade facade = new QuestionsFacade();
 
-                facade.ShareByEmail(destination_email, content_url);
-            }
-            catch (Exception ex)
-            {
-                WriteLog.AddEventLogEntry(ex);
-            }
+            facade.ShareByEmail(destination_email, content_url);
         }
     }
 }

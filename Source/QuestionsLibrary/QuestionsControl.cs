@@ -25,80 +25,90 @@ namespace QuestionsLibrary
 
             return entity;
         }
-        public void Update(Question entity)
+        public Question Update(Question entity)
         {
+            Question returnValue = null;
+
             using (var ctx = new QuestionsContext())
             {
-                var entUpdate = ctx.Questions.Find(entity.ID);
-                entUpdate.Description = entity.Description;
-                entUpdate.Number = entity.Number;
+                returnValue = ctx.Questions.Find(entity.ID);
+
+                if (returnValue == null)
+                    throw new QuestionLibaryException("The item with [ID={0}] does not exist.", entity.ID.ToString());
+
+                returnValue.Description = entity.Description;
+                returnValue.Number = entity.Number;
 
                 ctx.SaveChanges();
             }
+
+            return returnValue;
         }
-        public void Delete(Question entity)
+        public Question SaveOrUpdate(Question entity)
         {
-            Delete(entity.ID);
+            Question returnValue = null;
+
+            if (entity.ID > 0)
+                returnValue = Update(entity);
+            else
+                returnValue = Save(entity);
+
+            return returnValue;
         }
-        public void Delete(long idQuestion)
+        public bool Delete(Question entity)
         {
+            return DeleteById(entity.ID);
+        }
+        public bool DeleteById(long idQuestion)
+        {
+            bool returnValue = false;
             using (var ctx = new QuestionsContext())
             {
                 var entRemove = ctx.Questions.Find(idQuestion);
                 ctx.Questions.Remove(entRemove);
                 ctx.SaveChanges();
+
+                returnValue = true;
             }
+            return returnValue;
         }
 
         public bool Health()
         {
             bool returnValue = true;
-            try
+            using (var ctx = new QuestionsContext())
             {
-                using (var ctx = new QuestionsContext())
-                {
-                    var item = ctx.Questions.FirstOrDefault();
+                var item = ctx.Questions.FirstOrDefault();
 
-                    if (item == null)
-                        returnValue = false;
-                }
+                if (item == null)
+                    returnValue = false;
             }
-            catch (Exception)
-            {
-                returnValue = false;
-            }
+
             return returnValue;
         }
         public IList<Question> GetQuestion(string filter = null, int limit = 0, int offset = 0)
         {
             IList<Question> returnValue = null;
 
-            try
-            {
-                bool useSkipAndTake = limit > 0 && offset > 0;
+            bool useSkipAndTake = limit > 0 && offset > 0;
 
-                using (var ctx = new QuestionsContext())
-                {
-                    // Change this to using a dynamic predicate
-                    if (string.IsNullOrEmpty(filter))
-                    {
-                        if (useSkipAndTake)
-                            returnValue = ctx.Questions.OrderBy(x => x.ID).Skip(offset).Take(limit).ToList();
-                        else
-                            returnValue = ctx.Questions.OrderBy(x => x.ID).ToList();
-                    }
-                    else
-                    {
-                        if (useSkipAndTake)
-                            returnValue = ctx.Questions.Where(x => x.Description.Contains(filter)).OrderBy(x => x.ID).Skip(offset).Take(limit).ToList();
-                        else
-                            returnValue = ctx.Questions.Where(x => x.Description.Contains(filter)).OrderBy(x => x.ID).ToList();
-                    }
-                }
-            }
-            catch (Exception ex)
+            using (var ctx = new QuestionsContext())
             {
-                throw ex;
+                // Change this to using a dynamic predicate
+                if (string.IsNullOrEmpty(filter))
+                {
+                    if (useSkipAndTake)
+                        returnValue = ctx.Questions.OrderBy(x => x.ID).Skip(offset).Take(limit).ToList();
+                    else
+                        returnValue = ctx.Questions.OrderBy(x => x.ID).ToList();
+                }
+                else
+                {
+                    if (useSkipAndTake)
+                        returnValue = ctx.Questions.Where(x => x.Description.Contains(filter)).OrderBy(x => x.ID).Skip(offset).Take(limit).ToList();
+                    else
+                        returnValue = ctx.Questions.Where(x => x.Description.Contains(filter)).OrderBy(x => x.ID).ToList();
+                }
             }
 
             return returnValue;
@@ -107,52 +117,44 @@ namespace QuestionsLibrary
         {
             Question returnValue = null;
 
-            try
+            using (var ctx = new QuestionsContext())
             {
-                using (var ctx = new QuestionsContext())
-                {
-                    returnValue = ctx.Questions.Find(idQuestion);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                returnValue = ctx.Questions.Find(idQuestion);
             }
 
             return returnValue;
         }
 
-        public void ShareByEmail(string email, string urlContent)
+        public bool ShareByEmail(string email, string urlContent)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(email))
-                    throw new Exception("Email is necessary.");
+            bool returnValue = false;
 
-                string subject = "Question Detail";
-                string body = "<br />Details of question<br /><br />Thanks";
-                if (!string.IsNullOrEmpty(urlContent))
-                    using (WebClient client = new WebClient())
-                    {
-                        body = client.DownloadString(urlContent);
-                    }
+            if (string.IsNullOrEmpty(email))
+                throw new Exception("Email is necessary.");
 
-                // Get settings from .Config
-                SmtpSection smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            string subject = "Question Detail";
+            string body = "<br />Details of question<br /><br />Thanks";
+            if (!string.IsNullOrEmpty(urlContent))
+                using (WebClient client = new WebClient())
+                {
+                    body = client.DownloadString(urlContent);
+                }
 
-                EmailTools.Send2(smtpSection.Network.Host, 
-                    smtpSection.Network.Port, 
-                    smtpSection.Network.UserName, 
-                    smtpSection.Network.Password, 
-                    smtpSection.From, 
-                    email, 
-                    subject, 
-                    body);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            // Get settings from .Config
+            SmtpSection smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+
+            EmailTools.Send2(smtpSection.Network.Host,
+                smtpSection.Network.Port,
+                smtpSection.Network.UserName,
+                smtpSection.Network.Password,
+                smtpSection.From,
+                email,
+                subject,
+                body);
+
+            returnValue = true;
+
+            return returnValue;
         }
     }
 }

@@ -24,3 +24,4 @@ STEP 3: Configure email settings (Optional)
 
 Future Improvements
 - Leave only reference to entity framework in the QuestionsLibrary project
+- Use a predicate to dynamic construct queries linq

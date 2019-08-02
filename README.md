@@ -1,5 +1,5 @@
 # QuestionsApp
-API Questions
+ASP.NET Web API 2 example to list Questions
 
 Steps to run solution in Visual Studio 2013 or most recent version
 

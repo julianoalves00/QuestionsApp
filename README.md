@@ -3,6 +3,8 @@ ASP.NET Web API 2 example to list Questions
 
 Steps to run solution in Visual Studio 2013 or most recent version
 
+Recommended to use the main branch is the most stable
+
 STEP 1: Create Question table
 - In a Sql Server 2012 or most recent version
 - Select a database of your choice or create one  
@@ -22,4 +24,3 @@ STEP 3: Configure email settings (Optional)
 
 Future Improvements
 - Leave only reference to entity framework in the QuestionsLibrary project
-- 

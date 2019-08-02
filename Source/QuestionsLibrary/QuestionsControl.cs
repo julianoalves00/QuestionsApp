@@ -25,16 +25,35 @@ namespace QuestionsLibrary
 
             return entity;
         }
-        public void Update(Question entity)
+        public Question Update(Question entity)
         {
+            Question returnValue = null;
+
             using (var ctx = new QuestionsContext())
             {
-                var entUpdate = ctx.Questions.Find(entity.ID);
-                entUpdate.Description = entity.Description;
-                entUpdate.Number = entity.Number;
+                returnValue = ctx.Questions.Find(entity.ID);
+                
+                if (returnValue == null)
+                    throw new QuestionLibaryException("The item with [ID={0}] does not exist.", entity.ID.ToString());
+
+                returnValue.Description = entity.Description;
+                returnValue.Number = entity.Number;
 
                 ctx.SaveChanges();
             }
+
+            return returnValue;
+        }
+        public Question SaveOrUpdate(Question entity)
+        {
+            Question returnValue = null;
+
+            if (entity.ID > 0)
+                returnValue = Update(entity);
+            else
+                returnValue = Save(entity);
+
+            return returnValue;
         }
         public void Delete(Question entity)
         {

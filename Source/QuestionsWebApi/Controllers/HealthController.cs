@@ -24,6 +24,10 @@ namespace QuestionsWebApi.Controllers
 
                 returnValue = facade.Health();
             }
+            catch (QuestionLibaryException ex)
+            {
+                throw ex;
+            }
             catch (Exception ex)
             {
                 WriteLog.AddEventLogEntry(ex);

@@ -10,7 +10,8 @@ namespace QuestionsLibrary
     internal interface IQuestionsControl
     {
         Question Save(Question entity);
-        void Update(Question entity);
+        Question Update(Question entity);
+        Question SaveOrUpdate(Question entity);
         void Delete(Question entity);
         void Delete(long idQuestion);
         bool Health();

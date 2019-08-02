@@ -26,6 +26,10 @@ namespace QuestionsWebApi.Controllers
 
                 question = facade.GetQuestion(id);
             }
+            catch (QuestionLibaryException ex)
+            {
+                throw ex;
+            }
             catch (Exception ex)
             {
                 WriteLog.AddEventLogEntry(ex);
@@ -46,6 +50,10 @@ namespace QuestionsWebApi.Controllers
 
                 questions = facade.GetQuestion(filter, limit, offset);
             }
+            catch (QuestionLibaryException ex)
+            {
+                throw ex;
+            }
             catch (Exception ex)
             {
                 WriteLog.AddEventLogEntry(ex);
@@ -64,13 +72,35 @@ namespace QuestionsWebApi.Controllers
             try
             {
                 QuestionsFacade facade = new QuestionsFacade();
-                returnValue = facade.Save(question);
+                returnValue = facade.SaveOrUpdate(question);
+            }
+            catch (QuestionLibaryException ex)
+            {
+                throw ex;
             }
             catch (Exception ex)
             {
                 WriteLog.AddEventLogEntry(ex);
             }
             return returnValue;
+        }
+
+        [HttpDelete]
+        public void Delete(long id)
+        {
+            try
+            {
+                QuestionsFacade facade = new QuestionsFacade();
+                facade.Delete(id);
+            }
+            catch (QuestionLibaryException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                WriteLog.AddEventLogEntry(ex);
+            }
         }
     }
 }

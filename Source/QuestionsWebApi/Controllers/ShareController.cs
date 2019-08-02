@@ -23,6 +23,10 @@ namespace QuestionsWebApi.Controllers
 
                 facade.ShareByEmail(destination_email, content_url);
             }
+            catch (QuestionLibaryException ex)
+            {
+                throw ex;
+            }
             catch (Exception ex)
             {
                 WriteLog.AddEventLogEntry(ex);

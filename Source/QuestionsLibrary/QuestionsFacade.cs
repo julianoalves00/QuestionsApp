@@ -26,6 +26,10 @@ namespace QuestionsLibrary
         {
             QControl.Update(entity);
         }
+        public Question SaveOrUpdate(Question entity) 
+        {
+            return QControl.SaveOrUpdate(entity);
+        }
         public void Delete(Question entity)
         {
             QControl.Delete(entity);

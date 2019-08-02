@@ -20,3 +20,6 @@ STEP 3: Configure email settings (Optional)
 - Current email settings will work for testing, the project is using a gmail account that was created just for that
 - But if you want to change just modify de values in tag 'configuration/system.net/mailSettings/smtp' in the config files 
 
+Future Improvements
+- Leave only reference to entity framework in the QuestionsLibrary project
+- 

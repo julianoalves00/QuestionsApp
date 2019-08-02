@@ -3,7 +3,7 @@ ASP.NET Web API 2 example to list Questions
 
 Steps to run solution in Visual Studio 2013 or most recent version
 
-Recommended to use the main branch is the most stable
+Recommended to use the master branch, it is the most stable
 
 STEP 1: Create Question table
 - In a Sql Server 2012 or most recent version

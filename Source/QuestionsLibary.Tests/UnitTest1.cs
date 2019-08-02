@@ -104,8 +104,10 @@ namespace QuestionsLibary.Tests
             {
                 QuestionsFacade facade = new QuestionsFacade();
 
-                facade.ShareByEmail("juliano.alves@widescope.pt", null);
-                //facade.ShareByEmail("julianoalves@gmail.com", "https://ajuda.sapo.pt/");
+                //bool returnValue = facade.ShareByEmail("juliano.alves@widescope.pt", null);
+                bool returnValue = facade.ShareByEmail("julianoalves@gmail.com", "https://ajuda.sapo.pt/");
+
+                Assert.AreEqual(true, returnValue);
             }
             catch (Exception ex)
             {

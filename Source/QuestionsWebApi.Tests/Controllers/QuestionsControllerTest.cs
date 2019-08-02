@@ -71,11 +71,12 @@ namespace QuestionsWebApi.Tests.Controllers
                 Assert.AreEqual(true, retValue.Number == 200);
 
                 // test delete
-                controller.Delete(question.ID);
+                bool returnDelete = controller.Delete(question.ID);
 
                 retValue = controller.Get(question.ID);
 
                 Assert.AreEqual(true, retValue == null);
+                Assert.AreEqual(true, returnDelete);
 
                 // test update item not exists, throw exception
                 itemNotExists = true;

@@ -18,20 +18,11 @@ namespace QuestionsWebApi.Controllers
         public bool Get()
         {
             bool returnValue = false;
-            try
-            {
-                QuestionsFacade facade = new QuestionsFacade();
 
-                returnValue = facade.Health();
-            }
-            catch (QuestionLibaryException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                WriteLog.AddEventLogEntry(ex);
-            }
+            QuestionsFacade facade = new QuestionsFacade();
+
+            returnValue = facade.Health();
+
             return returnValue;
         }
     }

@@ -55,6 +55,10 @@
     <Compile Include="General\QuestionLibaryException.cs" />
     <Compile Include="General\WriteLog.cs" />
     <Compile Include="IQuestionsControl.cs" />
+    <Compile Include="DynamicProxy\ControlProxy.cs" />
+    <Compile Include="DynamicProxy\IProxyInvocationHandler.cs" />
+    <Compile Include="DynamicProxy\MetaDataFactory.cs" />
+    <Compile Include="DynamicProxy\ProxyFactory.cs" />
     <Compile Include="QuestionsFacade.cs" />
     <Compile Include="Entities\QuestionsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace QuestionsLibrary
 {
-    internal interface IQuestionsControl
+    public interface IQuestionsControl
     {
         Question Save(Question entity);
         Question Update(Question entity);
         Question SaveOrUpdate(Question entity);
-        void Delete(Question entity);
-        void Delete(long idQuestion);
+        bool Delete(Question entity);
+        bool DeleteById(long idQuestion);
         bool Health();
         IList<Question> GetQuestion(string filter = null, int limit = 0, int offset = 0);
         Question GetQuestion(long idQuestion);
-        void ShareByEmail(string email, string urlContent);
+        bool ShareByEmail(string email, string urlContent);
     }
 }
